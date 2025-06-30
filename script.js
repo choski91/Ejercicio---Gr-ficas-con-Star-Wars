@@ -50,36 +50,36 @@
 
 async function getPersonajes() {
     try {
-        const responseDos = await fetch(`https://swapi.info/api/people`);
-        if (!responseDos.ok) {
+        const response = await fetch(`https://swapi.info/api/people`);
+        if (!response.ok) {
             throw new Error(
-                `Error HTTP: ${responseDos.status} - ${responseDos.statusText}`
+                `Error HTTP: ${response.status} - ${response.statusText}`
             );
         }
-        const dataDos = await responseDos.json();
+        const data = await response.json();
 
-        const personajesFiltrados = dataDos.map(personaje => {
+        const personajesFiltrados = data.slice(0, 10).map(personaje => {
             return {
                 character: personaje.name,
                 number: personaje.films.length,
             }
         })
-        return personajesFiltrados;
+        return personajesFiltrados;//filtrar personajes
 
     } catch (error) {
         console.log(`ERROR: ${error.stack}`);
     }
 }
 getPersonajes()
-    .then((dataDos) => {
-        // console.log(dataDos);
+    .then((data) => {
+        // console.log(data);
         let personajes = [];
         let numeroPeliculas = [];
-        for (let i = 0; i < dataDos.length; i++) {
+        for (let i = 0; i < data.length; i++) {
 
-            personajes.push(dataDos[i].character);
+            personajes.push(data[i].character);
 
-            numeroPeliculas.push(dataDos[i].number);
+            numeroPeliculas.push(data[i].number);
         }
         console.log(personajes);
         console.log(numeroPeliculas);
